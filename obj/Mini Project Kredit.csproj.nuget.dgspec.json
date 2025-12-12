@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Mini Project Kredit\\Mini Project Kredit.csproj": {}
+    "C:\\Users\\berij\\Documents\\Mini-Project-Kredit\\Mini Project Kredit.csproj": {}
   },
   "projects": {
-    "D:\\Mini Project Kredit\\Mini Project Kredit.csproj": {
+    "C:\\Users\\berij\\Documents\\Mini-Project-Kredit\\Mini Project Kredit.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Mini Project Kredit\\Mini Project Kredit.csproj",
+        "projectUniqueName": "C:\\Users\\berij\\Documents\\Mini-Project-Kredit\\Mini Project Kredit.csproj",
         "projectName": "Mini_Project_Kredit",
-        "projectPath": "D:\\Mini Project Kredit\\Mini Project Kredit.csproj",
-        "packagesPath": "C:\\Users\\Kevin Antariksa\\.nuget\\packages\\",
-        "outputPath": "D:\\Mini Project Kredit\\obj\\",
+        "projectPath": "C:\\Users\\berij\\Documents\\Mini-Project-Kredit\\Mini Project Kredit.csproj",
+        "packagesPath": "C:\\Users\\berij\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\berij\\Documents\\Mini-Project-Kredit\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Kevin Antariksa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\berij\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -50,6 +49,16 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Components.QuickGrid": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -69,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

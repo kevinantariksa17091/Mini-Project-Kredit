@@ -1,3 +1,5 @@
+@import '_content/Microsoft.AspNetCore.Components.QuickGrid/Microsoft.AspNetCore.Components.QuickGrid.25o87uqmvr.bundle.scp.css';
+
 /* _content/Mini_Project_Kredit/Components/Layout/MainLayout.razor.rz.scp.css */
 .page[b-tkk05b6qs0] {
     position: relative;
@@ -202,4 +204,156 @@ main[b-tkk05b6qs0] {
         height: calc(100vh - 3.5rem);
         overflow-y: auto;
     }
+}
+/* _content/Mini_Project_Kredit/Components/Pages/Home.razor.rz.scp.css */
+/* HERO SECTION */
+.hero[b-klppfiu7gz] {
+    background: linear-gradient(135deg, #0d6efd, #084298);
+    color: white;
+    padding: 80px 0;
+}
+
+.hero h1[b-klppfiu7gz] {
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.hero p[b-klppfiu7gz] {
+    font-size: 1.2rem;
+    opacity: 0.95;
+}
+
+/* BUTTONS */
+.hero .btn[b-klppfiu7gz] {
+    min-width: 180px;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.hero .btn-outline-light:hover[b-klppfiu7gz] {
+    color: #0d6efd;
+    background-color: #ffffff;
+}
+
+/* FEATURE CARDS */
+.feature-card[b-klppfiu7gz] {
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover[b-klppfiu7gz] {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card h5[b-klppfiu7gz] {
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+/* FOOTER */
+.footer[b-klppfiu7gz] {
+    padding: 20px 0;
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+/* _content/Mini_Project_Kredit/Components/Pages/Login.razor.rz.scp.css */
+.login-container[b-y3ugrvcd4j] {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f4f6f9;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.login-box[b-y3ugrvcd4j] {
+    width: 350px;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0,0,0,0.1);
+}
+
+.login-box h3[b-y3ugrvcd4j] {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group[b-y3ugrvcd4j] {
+    margin-bottom: 15px;
+}
+
+input[b-y3ugrvcd4j] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.btn-login[b-y3ugrvcd4j] {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.error-msg[b-y3ugrvcd4j] {
+    color: red;
+    margin-bottom: 10px;
+    text-align: center;
+}
+/* _content/Mini_Project_Kredit/Components/Pages/Register.razor.rz.scp.css */
+.register-container[b-erulhycps2] {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f4f6f9;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.register-box[b-erulhycps2] {
+    width: 350px;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0,0,0,0.1);
+}
+
+.register-box h3[b-erulhycps2] {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group[b-erulhycps2] {
+    margin-bottom: 15px;
+}
+
+input[b-erulhycps2] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.btn-login[b-erulhycps2] {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.error-msg[b-erulhycps2] {
+    color: red;
+    margin-bottom: 10px;
+    text-align: center;
 }

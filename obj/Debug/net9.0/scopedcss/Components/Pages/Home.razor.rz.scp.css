@@ -1,0 +1,51 @@
+/* HERO SECTION */
+.hero[b-klppfiu7gz] {
+    background: linear-gradient(135deg, #0d6efd, #084298);
+    color: white;
+    padding: 80px 0;
+}
+
+.hero h1[b-klppfiu7gz] {
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.hero p[b-klppfiu7gz] {
+    font-size: 1.2rem;
+    opacity: 0.95;
+}
+
+/* BUTTONS */
+.hero .btn[b-klppfiu7gz] {
+    min-width: 180px;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.hero .btn-outline-light:hover[b-klppfiu7gz] {
+    color: #0d6efd;
+    background-color: #ffffff;
+}
+
+/* FEATURE CARDS */
+.feature-card[b-klppfiu7gz] {
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover[b-klppfiu7gz] {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card h5[b-klppfiu7gz] {
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+/* FOOTER */
+.footer[b-klppfiu7gz] {
+    padding: 20px 0;
+    background-color: #f8f9fa;
+    color: #6c757d;
+}

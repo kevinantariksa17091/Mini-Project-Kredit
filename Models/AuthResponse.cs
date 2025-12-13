@@ -9,7 +9,7 @@ namespace Mini_Project_Kredit.Models // <-- Tambahkan { di sini
     public class AuthResponse
     {
         public int status { get; set; }
-        public string pesan { get; set; }
-        public string token { get; set; }
+        public string? pesan { get; set; }
+        public string? token { get; set; }
     }
 } 

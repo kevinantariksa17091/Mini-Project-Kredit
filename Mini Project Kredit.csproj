@@ -4,8 +4,8 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Mini Project Kredit</RootNamespace>
-    <AssemblyName>$(AssemblyName.Replace(' ', '_'))</AssemblyName>
+    <AssemblyName>Mini_Project_Kredit</AssemblyName>
+    <RootNamespace>Mini_Project_Kredit</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,14 +1,33 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager Nav
+@implements IDisposable
+
+@{
+    var path = new Uri(Nav.Uri).AbsolutePath.ToLowerInvariant().TrimEnd('/');
+    if (string.IsNullOrWhiteSpace(path)) path = "/";
+
+    var hideSidebar =
+        path == "/" ||
+        path == "/landing" ||
+        path.StartsWith("/login") ||
+        path.StartsWith("/register");
+}
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+    @if (!hideSidebar)
+    {
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+    }
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+        @if (!hideSidebar)
+        {
+            <div class="top-row px-4">
+                <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+            </div>
+        }
 
         <article class="content px-4">
             @Body
@@ -21,3 +40,20 @@
     <a href="." class="reload">Reload</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        Nav.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        Nav.LocationChanged -= OnLocationChanged;
+    }
+}

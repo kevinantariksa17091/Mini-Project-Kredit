@@ -1,27 +1,42 @@
+using Microsoft.EntityFrameworkCore;
 using Mini_Project_Kredit.Components;
+using Mini_Project_Kredit.Models;
+using Mini_Project_Kredit.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// ✅ Register services (WAJIB sebelum Build)
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+// ✅ Authorization (untuk AuthorizeView / CascadingAuthenticationState)
+builder.Services.AddAuthorizationCore();
+
+// ✅ EF Core DbContextFactory
+builder.Services.AddDbContextFactory<AppDbContext>(options =>
+{
+    //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+// ✅ App services
+builder.Services.AddScoped<CreditRegistrationService>();
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<AuthService>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ✅ Middleware pipeline (setelah Build)
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
-
-
+app.UseStaticFiles();
 app.UseAntiforgery();
 
-app.MapStaticAssets();
+// ✅ Map components
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 

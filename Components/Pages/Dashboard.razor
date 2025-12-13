@@ -1,0 +1,34 @@
+@page "/dashboard"
+@rendermode InteractiveServer
+@using System.Security.Claims
+@inject NavigationManager Nav
+@inject Mini_Project_Kredit.Services.CreditRegistrationService CreditRegistrationService
+@using Microsoft.AspNetCore.Components.Authorization
+
+<PageTitle>Home</PageTitle>
+
+<AuthorizeView>
+    <Authorized Context="authState">
+        @{
+            var user = authState.User;
+            var username = user.Identity?.Name ?? "(tanpa nama)";
+        }
+
+        <h1>Hello, @username!</h1>
+
+        <h3>Edit Data Registrasi</h3>
+        <button class="btn btn-success mb-3" @onclick="GoToEdit">Edit Data Registrasi</button>
+    </Authorized>
+
+    <NotAuthorized>
+        <h1>Hello!</h1>
+        <p>Kamu belum login. Silakan <a href="/login">login</a>.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code{
+    private void GoToEdit()
+    {
+        Nav.NavigateTo("/edit-registration");
+    }
+}

@@ -77,3 +77,97 @@ C:\Users\berij\Documents\Mini-Project-Kredit\obj\Debug\net9.0\refint\Mini_Projec
 C:\Users\berij\Documents\Mini-Project-Kredit\obj\Debug\net9.0\Mini_Project_Kredit.pdb
 C:\Users\berij\Documents\Mini-Project-Kredit\obj\Debug\net9.0\Mini Project Kredit.genruntimeconfig.cache
 C:\Users\berij\Documents\Mini-Project-Kredit\obj\Debug\net9.0\ref\Mini_Project_Kredit.dll
+D:\Mini Project Kredit\bin\Debug\net9.0\appsettings.Development.json
+D:\Mini Project Kredit\bin\Debug\net9.0\appsettings.json
+D:\Mini Project Kredit\bin\Debug\net9.0\Mini_Project_Kredit.staticwebassets.runtime.json
+D:\Mini Project Kredit\bin\Debug\net9.0\Mini_Project_Kredit.staticwebassets.endpoints.json
+D:\Mini Project Kredit\bin\Debug\net9.0\Mini_Project_Kredit.exe
+D:\Mini Project Kredit\bin\Debug\net9.0\Mini_Project_Kredit.deps.json
+D:\Mini Project Kredit\bin\Debug\net9.0\Mini_Project_Kredit.runtimeconfig.json
+D:\Mini Project Kredit\bin\Debug\net9.0\Mini_Project_Kredit.dll
+D:\Mini Project Kredit\bin\Debug\net9.0\Mini_Project_Kredit.pdb
+D:\Mini Project Kredit\bin\Debug\net9.0\Microsoft.AspNetCore.Components.QuickGrid.dll
+D:\Mini Project Kredit\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
+D:\Mini Project Kredit\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Mini Project Kredit\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Mini Project Kredit\bin\Debug\net9.0\MySqlConnector.dll
+D:\Mini Project Kredit\bin\Debug\net9.0\Pomelo.EntityFrameworkCore.MySql.dll
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.csproj.AssemblyReference.cache
+D:\Mini Project Kredit\obj\Debug\net9.0\rpswa.dswa.cache.json
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.GeneratedMSBuildEditorConfig.editorconfig
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.AssemblyInfoInputs.cache
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.AssemblyInfo.cs
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.csproj.CoreCompileInputs.cache
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini_Project_Kredit.MvcApplicationPartsAssemblyInfo.cache
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.sourcelink.json
+D:\Mini Project Kredit\obj\Debug\net9.0\rjimswa.dswa.cache.json
+D:\Mini Project Kredit\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+D:\Mini Project Kredit\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+D:\Mini Project Kredit\obj\Debug\net9.0\scopedcss\Components\Layout\MainLayout.razor.rz.scp.css
+D:\Mini Project Kredit\obj\Debug\net9.0\scopedcss\Components\Layout\NavMenu.razor.rz.scp.css
+D:\Mini Project Kredit\obj\Debug\net9.0\scopedcss\Components\Pages\Home.razor.rz.scp.css
+D:\Mini Project Kredit\obj\Debug\net9.0\scopedcss\Components\Pages\Login.razor.rz.scp.css
+D:\Mini Project Kredit\obj\Debug\net9.0\scopedcss\Components\Pages\Register.razor.rz.scp.css
+D:\Mini Project Kredit\obj\Debug\net9.0\scopedcss\bundle\Mini_Project_Kredit.styles.css
+D:\Mini Project Kredit\obj\Debug\net9.0\scopedcss\projectbundle\Mini_Project_Kredit.bundle.scp.css
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\unlu0xluo6-eu7w3d5g1a.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\10al7skubf-khy4lop6wu.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\pluew8zi4n-6gzpyzhau4.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\3x33t5j3g7-8inm30yfxf.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\rq8dyj9ufd-bqjiyaj88i.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\v9417lk4c6-c2jlpeoesf.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\mi9m9cle5y-erw9l3u2r3.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\hqt64oheug-aexeepp0ev.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\x7ccyi5h1a-d7shbmvgxk.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\cds8sgih8u-ausgxo2sd3.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\fhuxwsz9n7-k8d9w2qqmf.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\rmocupnf69-cosvhxvwiu.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\051gigbm36-ub07r2b239.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\ncexh739kv-fvhpjtyr6v.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\vl1rzuujrb-b7pk76d08c.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\3lz3agg2rr-fsbi9cje9m.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\h4v7e6n6iv-rzd6atqjts.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\0qp2a6vs3i-ee0r1s7dh0.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\dlzfspe34u-dxx9fxp4il.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\afofmgmwz3-jd9uben2k1.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\unzjj8jvz1-khv3u5hwcm.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\76y7hepnn0-r4e9w2rdcm.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\72r8iyyqlb-lcd1t2u6c8.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\3eu0wcxhrm-c2oey78nd0.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\342z6wsc6i-tdbxkamptv.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\bubgehyw32-j5mq2jizvt.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\d1z1lw3vfk-06098lyss8.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\u096uym19x-nvvlpmu67g.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\16n827f98n-s35ty4nyc5.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\rtvssua979-pj5nd1wqec.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\8zx27a43w4-46ein0sx1k.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\8bqtfg7t2c-v0zj4ognzu.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\4g07y36fhy-37tfw0ft22.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\x1rs5m1vcr-hrwsygsryq.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\6watc2fys4-pk9g2wxc8p.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\8bqxg98z77-ft3s53vfgj.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\5mvnaoqqhk-6cfz1n2cew.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\e16ldzhzmp-6pdc2jztkx.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\fvty4sxjf7-493y06b0oq.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\omxp382aka-iovd86k7lj.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\5mlkctjn5j-vr1egmr9el.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\gzlsvcco30-kbrnm935zg.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\jwzafaivis-jj8uyg4cgr.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\k1jg95b382-y7v9cxd14o.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\ddsngcsxek-notf2xhcfb.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\wj5ddegl0l-h1s4sie4z3.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\vkubfk4w9g-63fj8s7r0e.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\p15v1ppz1v-0j3bgjxly4.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\3gin1ph7ub-25o87uqmvr.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\kb35ro5fyn-09hmoe1ldz.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\s3ley354cc-2v8uhit3al.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\staticwebassets.build.json
+D:\Mini Project Kredit\obj\Debug\net9.0\staticwebassets.build.json.cache
+D:\Mini Project Kredit\obj\Debug\net9.0\staticwebassets.development.json
+D:\Mini Project Kredit\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini Pro.F8BC7A79.Up2Date
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini_Project_Kredit.dll
+D:\Mini Project Kredit\obj\Debug\net9.0\refint\Mini_Project_Kredit.dll
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini_Project_Kredit.pdb
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.genruntimeconfig.cache
+D:\Mini Project Kredit\obj\Debug\net9.0\ref\Mini_Project_Kredit.dll

@@ -35,6 +35,12 @@ namespace Mini_Project_Kredit.Models
             ErrorMessage = "Password harus mengandung huruf kapital, angka, dan karakter spesial"
         )]
         public string Password { get; set; } = default!;
+        public string? VillageId { get; set; }
+        public string? VillageName { get; set; }
+        [Required]
+        public string DistrictId { get; set; }
+        public string? DistrictName { get; set; }
+        public string? RegencyName { get; set; }
         public DateTime RegistrationDate { get; set; }
 
 

@@ -1,7 +1,10 @@
 @page "/register"
+@rendermode InteractiveServer
 @using Mini_Project_Kredit.Models
 @inject NavigationManager Nav
 @inject Mini_Project_Kredit.Services.CreditRegistrationService CreditRegistrationService
+@inject Mini_Project_Kredit.Services.VillageService VillageService
+
 
 <PageTitle>Register</PageTitle>
 
@@ -58,6 +61,29 @@
                 <ValidationMessage For="@(() => Model.Password)" />
             </div>
 
+            <div class="mb-3">
+                <label class="form-label">Cari Desa</label>
+
+                <InputText class="form-control" Value="@_searchText" ValueChanged="OnSearchChanged"
+                    ValueExpression="(()=> _searchText)" />
+            </div>
+
+            <div class="text-muted small">
+                Keyword: @_searchText | Hasil: @districts.Count | Trigger: @_triggerCount
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">Pilih Desa</label>
+                <select class="form-select" @bind="Model.VillageId" @bind:after="OnVillageChanged">
+                    <option value="">-- pilih desa --</option>
+                    @foreach (var d in districts)
+                    {
+                        <option value="@d.id">@d.DisplayName</option>
+                    }
+                </select>
+            </div>
+
             <!-- RegistrationDate otomatis (tidak perlu input) -->
             <div class="small text-muted mt-2">
                 Tanggal Registrasi: @Model.RegistrationDate.ToString("yyyy-MM-dd HH:mm:ss")
@@ -79,9 +105,115 @@
     private string? Message;
     private string MessageCss = "alert alert-info";
     private string? UsernameError;
+    private string? VillageError;
 
     //var result = await CreditRegistrationService.RegisterAsync(Model);
     //Message = result.Message;
+    private List<DesaApiRow> districts = new();
+    private int _triggerCount = 0;
+    private string _searchText = "";
+
+    private async Task OnSearchChanged(string value)
+    {
+        _triggerCount++;
+        _searchText = value ?? "";
+
+        Console.WriteLine($"[Register] Trigger={_triggerCount}, keyword={_searchText}");
+
+        if (_searchText.Length < 3)
+        {
+            districts.Clear();
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        try
+        {
+            districts = await VillageService.SearchVillageAsync(_searchText.ToUpperInvariant());
+            Console.WriteLine($"[Register] districts.Count={districts.Count}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[Register] ERROR: {ex}");
+            districts.Clear();
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+
+    private async Task OnSearchInput(ChangeEventArgs e)
+    {
+        _triggerCount++;
+        _searchText = e.Value?.ToString() ?? "";
+
+        // DEBUG: bukti method kepanggil
+        Console.WriteLine($"[Register] OnSearchInput trigger={_triggerCount}, keyword={_searchText}");
+
+        if (_searchText.Length < 3)
+        {
+            districts.Clear();
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        try
+        {
+            var keyword = _searchText.ToUpperInvariant();
+            districts = await VillageService.SearchVillageAsync(keyword);
+            Console.WriteLine($"[Register] districts.Count={districts.Count}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[Register] ERROR: {ex}");
+            districts.Clear();
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void OnVillageChanged()
+    {
+        var selected = districts.FirstOrDefault(x => x.id == Model.VillageId);
+
+        if (selected != null)
+        {
+            Model.VillageName = selected.desa;
+            Model.DistrictName = selected.kecamatan;
+            Model.RegencyName = selected.kabupaten;
+        }
+        else
+        {
+            Model.VillageName = null;
+            Model.DistrictName = null;
+            Model.RegencyName = null;
+        }
+    }
+
+    private async Task SearchDesa()
+    {
+        VillageError = null;
+
+        if (string.IsNullOrWhiteSpace(_searchText) || _searchText.Length < 3)
+        {
+            districts.Clear();
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        try
+        {
+            var keyword = _searchText.ToUpperInvariant(); // banyak API case-sensitive
+            districts = await VillageService.SearchVillageAsync(keyword);
+        }
+        catch (Exception ex)
+        {
+            districts.Clear();
+            VillageError = ex.Message; // untuk debug awal
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
 
     protected override void OnInitialized()
     {

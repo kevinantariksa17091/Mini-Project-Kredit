@@ -159,8 +159,8 @@ D:\Mini Project Kredit\obj\Debug\net9.0\compressed\wj5ddegl0l-h1s4sie4z3.gz
 D:\Mini Project Kredit\obj\Debug\net9.0\compressed\vkubfk4w9g-63fj8s7r0e.gz
 D:\Mini Project Kredit\obj\Debug\net9.0\compressed\p15v1ppz1v-0j3bgjxly4.gz
 D:\Mini Project Kredit\obj\Debug\net9.0\compressed\3gin1ph7ub-25o87uqmvr.gz
-D:\Mini Project Kredit\obj\Debug\net9.0\compressed\kb35ro5fyn-09hmoe1ldz.gz
-D:\Mini Project Kredit\obj\Debug\net9.0\compressed\s3ley354cc-2v8uhit3al.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\kb35ro5fyn-bipq1aruny.gz
+D:\Mini Project Kredit\obj\Debug\net9.0\compressed\s3ley354cc-qt0e5jalxl.gz
 D:\Mini Project Kredit\obj\Debug\net9.0\staticwebassets.build.json
 D:\Mini Project Kredit\obj\Debug\net9.0\staticwebassets.build.json.cache
 D:\Mini Project Kredit\obj\Debug\net9.0\staticwebassets.development.json

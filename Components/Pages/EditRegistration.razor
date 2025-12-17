@@ -1,0 +1,241 @@
+@page "/edit-registration"
+@rendermode InteractiveServer
+
+@using Mini_Project_Kredit.Models
+@using Microsoft.AspNetCore.Components.Forms
+@inject NavigationManager Nav
+@inject Mini_Project_Kredit.Services.CreditRegistrationService CreditRegistrationService
+@inject Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage.ProtectedSessionStorage SessionStore
+
+<h3>Edit Data Registrasi</h3>
+
+@if (_loading)
+{
+    <div class="d-flex align-items-center">
+        <div class="spinner-border text-primary ms-2" role="status"></div>
+        <span class="ms-2">Loading data...</span>
+    </div>
+}
+else if (!string.IsNullOrEmpty(_error))
+{
+    <div class="alert alert-danger">@_error</div>
+}
+else if (Model is null)
+{
+    <div class="alert alert-warning">Data tidak ditemukan.</div>
+}
+else
+{
+    <EditForm Model="Model" OnValidSubmit="HandleUpdate">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="row">
+            <div class="col-md-8">
+                
+                @* --- AREA READ ONLY (TIDAK BISA DIUBAH) --- *@
+                <div class="card bg-light mb-3">
+                    <div class="card-body">
+                        <h6 class="card-title text-muted">Informasi Akun (Tidak dapat diubah)</h6>
+                        <div class="form-group mb-2">
+                            <label>Username</label>
+                            <input type="text" class="form-control" value="@Model.username" readonly />
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Tanggal Registrasi</label>
+                            <input type="text" class="form-control" value="@Model.RegistrationDate" readonly />
+                        </div>
+                    </div>
+                </div>
+
+                @* --- AREA EDITABLE (BISA DIUBAH) --- *@
+                <div class="form-group mb-3">
+                    <label>Nama Lengkap</label>
+                    <InputText class="form-control" @bind-Value="Model.FullName" />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label>Alamat</label>
+                    <InputTextArea class="form-control" @bind-Value="Model.Address" />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label>No. Telepon</label>
+                    <InputText class="form-control" @bind-Value="Model.PhoneNumber" />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">Foto Profil</div>
+                    <div class="card-body text-center">
+                        @if (!string.IsNullOrEmpty(Model.ProfileImagePath))
+                        {
+                            @* Tampilkan gambar berdasarkan path di Model *@
+                            <img src="@Model.ProfileImagePath" class="img-thumbnail mb-3" style="max-height: 200px; width: auto;" alt="Foto Profil" />
+                        }
+                        else
+                        {
+                            <div class="mb-3 p-4 bg-light border text-muted">
+                                Belum ada foto
+                            </div>
+                        }
+
+                        @* Input File Blazor *@
+                        <div class="mb-3">
+                            @if (_uploading)
+                            {
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                                    <span>Uploading...</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <InputFile OnChange="HandleFileSelected" class="form-control" accept="image/*" />
+                            }
+                        </div>
+                        <small class="text-muted">Maksimal 2 MB (JPG/PNG)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+        <button class="btn btn-primary" type="submit" disabled="@(_saving || _uploading)">
+            @if (_saving)
+            {
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <span> Menyimpan Data...</span>
+            }
+            else
+            {
+                <span>Simpan Perubahan</span>
+            }
+        </button>
+        <button type="button" class="btn btn-secondary ms-2" @onclick='() => Nav.NavigateTo("/dashboard")'>Batal</button>
+    </EditForm>
+}
+
+@code {
+    private CreditRegistration? Model;
+    private bool _loading = true;
+    private bool _saving = false;
+    private bool _loadedOnce = false;
+    private bool _uploading = false; // Status baru untuk upload file
+    private string? _error;
+    
+    private long _maxFileSize = 1024 * 1024 * 2; // 2 MB
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_loadedOnce) return;
+        _loadedOnce = true; 
+
+        try
+        {
+            var stored = await SessionStore.GetAsync<string>("username");
+            var uname = stored.Success ? stored.Value : null;
+
+            if (string.IsNullOrWhiteSpace(uname))
+            {
+                Nav.NavigateTo("/login");
+                return;
+            }
+
+            Model = await CreditRegistrationService.GetByUsernameAsync(uname);
+            
+            if (Model == null)
+            {
+                _error = "Data user tidak ditemukan.";
+            }
+        }
+        catch (Exception ex)
+        {
+            _error = $"Gagal memuat data: {ex.Message}";
+        }
+        finally
+        {
+            _loading = false;
+            await InvokeAsync(StateHasChanged); 
+        }
+    }
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        _uploading = true;
+        _error = null;
+
+        // Validasi tipe file
+        if (!file.ContentType.Contains("image"))
+        {
+            _error = "File harus berupa gambar.";
+            _uploading = false;
+            return;
+        }
+
+        // Validasi ukuran
+        if (file.Size > _maxFileSize)
+        {
+            _error = "Ukuran file maksimal 2 MB.";
+            _uploading = false;
+            return;
+        }
+
+        try
+        {
+            // Panggil Service untuk menyimpan file di server
+            // Metode ini HARUS mengembalikan path URL (misal: /uploads/namafile.jpg)
+            if (Model != null)
+            {
+                // **Penting: Asumsi CreditRegistrationService memiliki metode SaveProfileImageAsync**
+                Model.ProfileImagePath = await CreditRegistrationService.SaveProfileImageAsync(file);
+            }
+            
+        }
+        catch (NotImplementedException)
+        {
+             _error = "ERROR: Metode penyimpanan file di Service belum diimplementasikan.";
+        }
+        catch (Exception ex)
+        {
+            _error = $"Gagal upload gambar: {ex.Message}";
+        }
+        finally
+        {
+            _uploading = false;
+            // Wajib panggil ini untuk update UI setelah upload selesai
+            await InvokeAsync(StateHasChanged); 
+        }
+    }
+
+    private async Task HandleUpdate()
+    {
+        if (Model == null) return;
+
+        try
+        {
+            _saving = true;
+            // Path gambar (ProfileImagePath) sudah diperbarui di HandleFileSelected, jadi kirim Model
+            var res = await CreditRegistrationService.UpdateRegistrationAsync(Model);
+
+            if (res.Success)
+            {
+                Nav.NavigateTo("/dashboard");
+            }
+            else
+            {
+                _error = res.Message;
+            }
+        }
+        catch (Exception ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+}

@@ -58,6 +58,7 @@
         if (result.status == 1)
         {
             await SessionStore.SetAsync("token", result.token);
+            await SessionStore.SetAsync("username", username); 
             await AuthStateProvider.RefreshAsync();
             Nav.NavigateTo("/dashboard", true);
         }

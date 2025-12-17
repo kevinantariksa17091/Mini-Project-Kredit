@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Mini_Project_Kredit.Services
 {
     public interface IEmailSender
-{
-    Task SendRegistrationConfirmationAsync(string toEmail, string username);
-}
+    {
+        Task SendRegistrationConfirmationAsync(string toEmail, string username);
+    }
 }

@@ -1,85 +1,110 @@
 @page "/dashboard"
 @rendermode InteractiveServer
 @using Mini_Project_Kredit.Models
-@using Microsoft.AspNetCore.Components.Authorization
 @inject NavigationManager Nav
 @inject Mini_Project_Kredit.Services.CreditRegistrationService CreditRegistrationService
+@inject Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage.ProtectedSessionStorage SessionStore
 
 <PageTitle>Dashboard</PageTitle>
 
-<AuthorizeView>
-    <Authorized Context="authState">
-        @{
-            var user = authState.User;
-            var username = user.Identity?.Name ?? "(tanpa nama)";
-        }
+@* Cek apakah loading atau belum terautentikasi *@
+@if (_isLoading)
+{
+    <div class="alert alert-info">Memeriksa status login...</div>
+}
+else if (_isAuthenticated)
+{
+    <h1>Hello, @(_username ?? "User")</h1>
 
-        <h1>Hello, @username!</h1>
+    <h3>Data Credit Registrations</h3>
 
-        <h3>Data Credit Registrations</h3>
-
-        @if (_loading)
-        {
-            <p>Loading...</p>
-        }
-        else if (_rows is null || _rows.Count == 0)
-        {
-            <p>Belum ada data.</p>
-        }
-        else
-        {
-            <table class="table table-striped">
-                <thead>
+    @if (_rows is null || _rows.Count == 0)
+    {
+        <p>Belum ada data.</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Full Name</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Registration Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in _rows)
+                {
                     <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Full Name</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Registration Date</th>
+                        <td>@r.username</td>
+                        <td>@r.FullName</td>
+                        <td>@r.PhoneNumber</td>
+                        <td>@r.Address</td>
+                        <td>@r.RegistrationDate</td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var r in _rows)
-                    {
-                        <tr>
-                            <td>@r.idRegistration</td>
-                            <td>@r.username</td>
-                            <td>@r.FullName</td>
-                            <td>@r.PhoneNumber</td>
-                            <td>@r.Address</td>
-                            <td>@r.RegistrationDate</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
+                }
+            </tbody>
+        </table>
+    }
 
-        <hr />
-        <h3>Edit Data Registrasi</h3>
-        <button class="btn btn-success mb-3" @onclick="GoToEdit">Edit Data Registrasi</button>
-    </Authorized>
-
-    <NotAuthorized>
-        <h1>Hello!</h1>
-        <p>Kamu belum login. Silakan <a href="/login">login</a>.</p>
-    </NotAuthorized>
-</AuthorizeView>
+    <hr />
+    <h3>Edit Data Registrasi</h3>
+    <button class="btn btn-success mb-3" @onclick="GoToEdit">Edit Data Registrasi</button>
+}
+else
+{
+    @* Opsi: Tampilkan pesan akses ditolak jika redirect belum terjadi *@
+    <p>Access Denied. Redirecting to login...</p>
+}
 
 @code {
     private List<CreditRegistration>? _rows;
-    private bool _loading = true;
+    private bool _isLoading = true;
+    private bool _isAuthenticated = false;
+    private string? _username;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        // Note: data tetap akan diload walau belum login.
-        // Kalau mau STRICT, load data hanya ketika Authorized (lihat catatan di bawah).
-        _rows = await CreditRegistrationService.GetAllAsync();
-        _loading = false;
+        if (firstRender)
+        {
+            try
+            {
+                var result = await SessionStore.GetAsync<string>("username");
+
+                if (result.Success && !string.IsNullOrEmpty(result.Value))
+                {
+                    // User Login: Simpan username dan load data
+                    _username = result.Value;
+                    _isAuthenticated = true;
+                    
+                    // Load data di sini agar tidak membebani server jika user belum login
+                    _rows = await CreditRegistrationService.GetAllAsync();
+                }
+                else
+                {
+                    // User Belum Login: Redirect
+                    _isAuthenticated = false;
+                    Nav.NavigateTo("/login", forceLoad: true);
+                }
+            }
+            catch
+            {
+                // Error handling jika storage bermasalah
+                Nav.NavigateTo("/login");
+            }
+            finally
+            {
+                _isLoading = false;
+                StateHasChanged(); // Wajib panggil ini untuk update UI setelah render selesai
+            }
+        }
     }
 
     private void GoToEdit()
     {
+        // Tidak perlu cek async session lagi karena sudah dicek di awal
         Nav.NavigateTo("/edit-registration");
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Mini_Project_Kredit.Models;
 using Mini_Project_Kredit.Services;
+using Microsoft.AspNetCore.Components.Forms;
 
 
 namespace Mini_Project_Kredit.Services
@@ -38,11 +39,9 @@ namespace Mini_Project_Kredit.Services
 
             try
             {
-                // 1️⃣ INSERT ke database
                 db.CreditRegistrations.Add(model);
                 await db.SaveChangesAsync();
 
-                // 2️⃣ KIRIM EMAIL (setelah DB sukses)
                 try
                 {
                     await _emailSender.SendRegistrationConfirmationAsync(
@@ -56,7 +55,6 @@ namespace Mini_Project_Kredit.Services
                     Console.WriteLine($"[Email] Gagal kirim email: {emailEx.Message}");
                 }
 
-                // 3️⃣ RETURN SUCCESS
                 return ServiceResult.Ok("Registrasi berhasil.", model.idRegistration);
             }
             catch (DbUpdateException ex)
@@ -137,6 +135,25 @@ namespace Mini_Project_Kredit.Services
                 .AsNoTracking()
                 .OrderByDescending(x => x.idRegistration)
                 .ToListAsync();
+        }
+        public async Task<CreditRegistration?> GetByUsernameAsync(string username)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            username = username.Trim();
+
+            return await db.CreditRegistrations
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.username == username);
+        }
+        public async Task<string> SaveProfileImageAsync(IBrowserFile file)
+        {
+            // 1. Logika di sini adalah:
+            //    a. Menentukan path fisik di server (misal: wwwroot/profiles)
+            //    b. Menyimpan stream file ke path tersebut.
+            //    c. MENGEMBALIKAN PATH RELATIF URL (misal: /profiles/user_123.png)
+
+            // Contoh: return "/uploads/profiles/namafile.jpg";
+            throw new NotImplementedException("Implementasi penyimpanan file di server diperlukan.");
         }
 
     }

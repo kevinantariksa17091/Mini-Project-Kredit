@@ -44,9 +44,10 @@ namespace Mini_Project_Kredit.Models
         public string? DistrictName { get; set; }
         public string? RegencyName { get; set; }
         public DateTime RegistrationDate { get; set; }
-
-        public bool isRegistered { get; set; } = false;
+        public int isRegistered { get; set; } = 0;
         public string? ProfileImagePath { get; set; }
+        public string? ConfirmToken { get; set; }           // token unik
+        public DateTime? ConfirmTokenExpiry { get; set; }   // optional expiry
 
     }
 }

@@ -45,10 +45,10 @@ Halo {username},
 
 Pendaftaran kamu telah berhasil.
 
+Berikut untuk autorisasi 
+
 Terima kasih telah mendaftar di Mini Project Kredit.
 
-Salam,
-Mini Project Kredit
 ".Trim(),
                 IsBodyHtml = false
             };

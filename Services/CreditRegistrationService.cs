@@ -4,56 +4,70 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Mini_Project_Kredit.Models;
+using Mini_Project_Kredit.Services;
+
 
 namespace Mini_Project_Kredit.Services
 {
     public class CreditRegistrationService
     {
         private readonly IDbContextFactory<AppDbContext> _dbFactory;
+        private readonly IEmailSender _emailSender;
 
-        public CreditRegistrationService(IDbContextFactory<AppDbContext> dbFactory)
+        public CreditRegistrationService(IDbContextFactory<AppDbContext> dbFactory, IEmailSender emailSender)
         {
             _dbFactory = dbFactory;
+            _emailSender = emailSender;
         }
 
         public async Task<ServiceResult> RegisterAsync(CreditRegistration model)
         {
-            // Guard basic
             if (string.IsNullOrWhiteSpace(model.username))
                 return ServiceResult.Fail("Username wajib diisi.");
 
-            // Normalisasi username (biar konsisten, optional tapi bagus)
             model.username = model.username.Trim();
-
-            // ✅ Isi otomatis di backend (WAJIB)
             model.RegistrationDate = DateTime.Now;
 
             await using var db = await _dbFactory.CreateDbContextAsync();
 
-            // ✅ Cek username sudah ada (database check)
             var usernameExists = await db.CreditRegistrations
                 .AnyAsync(x => x.username == model.username);
 
             if (usernameExists)
-                return ServiceResult.Fail("Username sudah digunakan. Silakan pilih username lain.");
-
-            // Optional: cek NIK unik (kalau memang requirement)
-            // var nikExists = await db.CreditRegistrations.AnyAsync(x => x.Nik == model.Nik);
-            // if (nikExists) return ServiceResult.Fail("NIK sudah terdaftar.");
+                return ServiceResult.Fail("Username sudah digunakan.");
 
             try
             {
+                // 1️⃣ INSERT ke database
                 db.CreditRegistrations.Add(model);
                 await db.SaveChangesAsync();
 
+                // 2️⃣ KIRIM EMAIL (setelah DB sukses)
+                try
+                {
+                    await _emailSender.SendRegistrationConfirmationAsync(
+                        model.Email,
+                        model.username
+                    );
+                }
+                catch (Exception emailEx)
+                {
+                    // Email gagal TIDAK membatalkan registrasi
+                    Console.WriteLine($"[Email] Gagal kirim email: {emailEx.Message}");
+                }
+
+                // 3️⃣ RETURN SUCCESS
                 return ServiceResult.Ok("Registrasi berhasil.", model.idRegistration);
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                // Anti race condition: kalau 2 request barengan, unique index bisa melempar error
-                return ServiceResult.Fail("Registrasi gagal. Username sudah digunakan.");
+                var root = ex.InnerException?.Message ?? ex.Message;
+                Console.WriteLine($"[Register][DbUpdateException] {root}");
+
+                return ServiceResult.Fail($"Registrasi gagal: {root}");
             }
         }
+
 
         // Optional: untuk login sederhana (sementara, karena password idealnya HASH)
         public async Task<CreditRegistration?> GetByUsernameAndPasswordAsync(string username, string password)
@@ -92,5 +106,38 @@ namespace Mini_Project_Kredit.Services
             await db.SaveChangesAsync();
             return ServiceResult.Ok("Profil berhasil diperbarui.", existing.idRegistration);
         }
+        public async Task<ServiceResult> UpdateRegistrationAsync(CreditRegistration updated)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+
+            var existing = await db.CreditRegistrations
+                .FirstOrDefaultAsync(x => x.idRegistration == updated.idRegistration);
+
+            if (existing == null)
+                return ServiceResult.Fail("Data registrasi tidak ditemukan.");
+
+            existing.FullName = updated.FullName;
+            existing.Address = updated.Address;
+            existing.PhoneNumber = updated.PhoneNumber;
+
+            existing.VillageId = updated.VillageId;
+            existing.VillageName = updated.VillageName;
+            existing.DistrictName = updated.DistrictName;
+            existing.RegencyName = updated.RegencyName;
+
+            existing.ProfileImagePath = updated.ProfileImagePath;
+
+            await db.SaveChangesAsync();
+            return ServiceResult.Ok("Data berhasil diperbarui.");
+        }
+        public async Task<List<CreditRegistration>> GetAllAsync()
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            return await db.CreditRegistrations
+                .AsNoTracking()
+                .OrderByDescending(x => x.idRegistration)
+                .ToListAsync();
+        }
+
     }
 }

@@ -1,0 +1,83 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: mpk-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  mysql:
+    image: mysql:8.0
+    container_name: mpk-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root12345
+      MYSQL_DATABASE: minikreditdb
+      MYSQL_USER: minikredit
+      MYSQL_PASSWORD: minikredit123
+    command: >
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mpk_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot12345"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  web:
+    build:
+      context: .
+      dockerfile: Mini_Project_Kredit/Dockerfile
+    container_name: mpk-web
+    depends_on:
+      mysql:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+
+      ConnectionStrings__DefaultConnection: "Server=mysql;Port=3306;Database=minikreditdb;User=minikredit;Password=minikredit123;"
+
+      InixApi__Username: "ISI_USERNAME_DARI_PROVIDER"
+      InixApi__Password: "ISI_PASSWORD_DARI_PROVIDER"
+
+      RabbitMq__Host: "rabbitmq"
+      RabbitMq__Port: "5672"
+      RabbitMq__Username: "guest"
+      RabbitMq__Password: "guest"
+
+  emailworker:
+    build:
+      context: .
+      dockerfile: EmailWorker/Dockerfile
+    container_name: mpk-emailworker
+    depends_on:
+      rabbitmq:
+        condition: service_started
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+
+      RabbitMq__Host: "rabbitmq"
+      RabbitMq__Port: "5672"
+      RabbitMq__Username: "guest"
+      RabbitMq__Password: "guest"
+
+      # SMTP contoh (sesuaikan)
+      Smtp__Host: "smtp.gmail.com"
+      Smtp__Port: "587"
+      Smtp__User: "you@gmail.com"
+      Smtp__Pass: "app-password"
+      Smtp__From: "you@gmail.com"
+
+volumes:
+  mpk_mysql_data:

@@ -4,6 +4,9 @@
 @inject Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage.ProtectedSessionStorage SessionStore
 @inject Mini_Project_Kredit.Services.AuthService Auth
 @inject NavigationManager Nav
+@using Mini_Project_Kredit.Services
+@inject Mini_Project_Kredit.Services.CustomAuthStateProvider AuthStateProvider
+
 
 <div class="login-container">
     <div class="login-box">
@@ -55,7 +58,8 @@
         if (result.status == 1)
         {
             await SessionStore.SetAsync("token", result.token);
-            Nav.NavigateTo("/", true);
+            await AuthStateProvider.RefreshAsync();
+            Nav.NavigateTo("/dashboard", true);
         }
         else
         {

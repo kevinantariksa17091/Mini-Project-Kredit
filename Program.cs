@@ -1,31 +1,37 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Components.Authorization;
 using Mini_Project_Kredit.Components;
 using Mini_Project_Kredit.Models;
 using Mini_Project_Kredit.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-
 builder.Services.AddAuthorizationCore();
 
+// ✅ Auth state provider registration
+builder.Services.AddScoped<CustomAuthStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider>(sp =>
+    sp.GetRequiredService<CustomAuthStateProvider>());
 
 builder.Services.AddDbContextFactory<AppDbContext>(options =>
 {
-    //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    var cs = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.UseMySql(cs, ServerVersion.AutoDetect(cs));
 });
 
-
 builder.Services.AddScoped<CreditRegistrationService>();
-builder.Services.AddHttpClient();
 builder.Services.AddScoped<AuthService>();
+
+builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<VillageService>();
 
-var app = builder.Build();
+builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
+builder.Services.AddScoped<IEmailSender, SmtpEmailSender>();
 
+var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
@@ -37,7 +43,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-// ✅ Map components
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 

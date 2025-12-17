@@ -1,11 +1,11 @@
 @page "/dashboard"
 @rendermode InteractiveServer
-@using System.Security.Claims
+@using Mini_Project_Kredit.Models
+@using Microsoft.AspNetCore.Components.Authorization
 @inject NavigationManager Nav
 @inject Mini_Project_Kredit.Services.CreditRegistrationService CreditRegistrationService
-@using Microsoft.AspNetCore.Components.Authorization
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Dashboard</PageTitle>
 
 <AuthorizeView>
     <Authorized Context="authState">
@@ -16,6 +16,46 @@
 
         <h1>Hello, @username!</h1>
 
+        <h3>Data Credit Registrations</h3>
+
+        @if (_loading)
+        {
+            <p>Loading...</p>
+        }
+        else if (_rows is null || _rows.Count == 0)
+        {
+            <p>Belum ada data.</p>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Full Name</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Registration Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in _rows)
+                    {
+                        <tr>
+                            <td>@r.idRegistration</td>
+                            <td>@r.username</td>
+                            <td>@r.FullName</td>
+                            <td>@r.PhoneNumber</td>
+                            <td>@r.Address</td>
+                            <td>@r.RegistrationDate</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <hr />
         <h3>Edit Data Registrasi</h3>
         <button class="btn btn-success mb-3" @onclick="GoToEdit">Edit Data Registrasi</button>
     </Authorized>
@@ -26,7 +66,18 @@
     </NotAuthorized>
 </AuthorizeView>
 
-@code{
+@code {
+    private List<CreditRegistration>? _rows;
+    private bool _loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Note: data tetap akan diload walau belum login.
+        // Kalau mau STRICT, load data hanya ketika Authorized (lihat catatan di bawah).
+        _rows = await CreditRegistrationService.GetAllAsync();
+        _loading = false;
+    }
+
     private void GoToEdit()
     {
         Nav.NavigateTo("/edit-registration");

@@ -8,6 +8,7 @@ namespace Mini_Project_Kredit.Models
 {
     public class CreditRegistration
     {
+        [Key]
         public int idRegistration { get; set; }
         public int idCustomer { get; set; }
         [Required]
@@ -20,6 +21,8 @@ namespace Mini_Project_Kredit.Models
         [Required]
         [StringLength(160, ErrorMessage = "Nama Desa tidak boleh melebihi {1} karakter.")]
         public string Address { get; set; } = default!;
+        [Required]
+        public string Email { get; set; } = default!;
         [Required]
         [StringLength(13, MinimumLength = 8,
         ErrorMessage = "Nomor telepon minimal 8 dan maksimal 13 digit")]
@@ -37,12 +40,13 @@ namespace Mini_Project_Kredit.Models
         public string Password { get; set; } = default!;
         public string? VillageId { get; set; }
         public string? VillageName { get; set; }
-        [Required]
-        public string DistrictId { get; set; }
+        public string? DistrictId { get; set; }
         public string? DistrictName { get; set; }
         public string? RegencyName { get; set; }
         public DateTime RegistrationDate { get; set; }
 
+        public bool isRegistered { get; set; } = false;
+        public string? ProfileImagePath { get; set; }
 
     }
 }

@@ -2,33 +2,61 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using Mini_Project_Kredit.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace Mini_Project_Kredit.Services;
-
-public class AuthService
+namespace Mini_Project_Kredit.Services
 {
-    private readonly HttpClient _http;
-
-    public AuthService(HttpClient http)
+    public class AuthResult
     {
-        _http = http;
+        public int status { get; set; }
+        public string token { get; set; } = "";
+        public string pesan { get; set; } = "";
     }
 
-    public async Task<AuthResponse?> Login(string username, string password)
+    public class AuthService
     {
-        var url = "http://api.inixindojogja.com/index.php/svc/get_token";
+        private readonly IDbContextFactory<AppDbContext> _dbFactory;
 
-        var creds = Encoding.ASCII.GetBytes($"{username}:{password}");
-        _http.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue("Basic", Convert.ToBase64String(creds));
+        public AuthService(IDbContextFactory<AppDbContext> dbFactory)
+        {
+            _dbFactory = dbFactory;
+        }
 
-        var response = await _http.PostAsync(url, null);
+        public async Task<AuthResult?> Login(string username, string password)
+        {
+            try
+            {
+                username = (username ?? "").Trim();
+                password = password ?? "";
 
-        if (!response.IsSuccessStatusCode)
-            return null;
+                await using var db = await _dbFactory.CreateDbContextAsync();
 
-        var json = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<AuthResponse>(json);
+                var user = await db.CreditRegistrations
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x => x.username == username);
+
+                if (user == null)
+                    return new AuthResult { status = 0, pesan = "Username tidak ditemukan." };
+
+                // PERHATIAN: ini plaintext. Untuk production harus hash.
+                if (user.Password != password)
+                    return new AuthResult { status = 0, pesan = "Password salah." };
+
+                // token sederhana untuk demo (lebih baik pakai JWT)
+                var token = Guid.NewGuid().ToString("N");
+
+                return new AuthResult
+                {
+                    status = 1,
+                    token = token,
+                    pesan = "Login berhasil."
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[AuthService.Login] {ex}");
+                return null;
+            }
+        }
     }
-
 }

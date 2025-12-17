@@ -44,6 +44,11 @@
                 <InputText class="form-control" @bind-Value="Model.PhoneNumber" placeholder="8-13 digit" />
                 <ValidationMessage For="@(() => Model.PhoneNumber)" />
             </div>
+            <div class="form-group">
+                <label>Email</label>
+                <InputText class="form-control" @bind-Value="Model.Email" placeholder="Email" />
+                <ValidationMessage For="@(() => Model.Email)" />
+            </div>
 
             <div class="form-group">
                 <label>Username</label>

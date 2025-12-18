@@ -11,7 +11,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddAuthorizationCore();
 
-// ✅ Auth state provider registration
+
 builder.Services.AddScoped<CustomAuthStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(sp =>
     sp.GetRequiredService<CustomAuthStateProvider>());

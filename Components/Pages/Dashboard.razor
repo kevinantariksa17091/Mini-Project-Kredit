@@ -14,7 +14,21 @@
 }
 else if (_isAuthenticated)
 {
-    <h1>Hello, @(_username ?? "User")</h1>
+    
+    @if (_currentUserRegistration != null && !string.IsNullOrEmpty(_currentUserRegistration.ProfileImagePath))
+    {
+        <div class="mb-3 text-center">
+            <img src="@_currentUserRegistration.ProfileImagePath" alt="Foto Profil Saya"
+                style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; border: 3px solid #007bff;" />
+            <h5>Hello, @(_username ?? "User")</h5>
+        </div>
+    
+    }
+    else if (_currentUserRegistration != null)
+    {
+        <div class="alert alert-warning small">Anda belum mengunggah foto profil. Silakan <a href="/edit-registration">Edit Data
+                Registrasi</a>.</div>
+    }
 
     <h3>Data Credit Registrations</h3>
 
@@ -61,9 +75,11 @@ else
 
 @code {
     private List<CreditRegistration>? _rows;
+    private CreditRegistration? _currentUserRegistration;
     private bool _isLoading = true;
     private bool _isAuthenticated = false;
     private string? _username;
+
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -78,9 +94,10 @@ else
                     // User Login: Simpan username dan load data
                     _username = result.Value;
                     _isAuthenticated = true;
-                    
+
                     // Load data di sini agar tidak membebani server jika user belum login
                     _rows = await CreditRegistrationService.GetAllAsync();
+                    _currentUserRegistration = await CreditRegistrationService.GetByUsernameAsync(_username);
                 }
                 else
                 {

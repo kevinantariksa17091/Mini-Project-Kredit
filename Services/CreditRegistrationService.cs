@@ -6,19 +6,26 @@ using Microsoft.EntityFrameworkCore;
 using Mini_Project_Kredit.Models;
 using Mini_Project_Kredit.Services;
 using Microsoft.AspNetCore.Components.Forms;
-
+using Microsoft.AspNetCore.Hosting; // <<< Hati-hati: Pastikan namespace ini ada
 
 namespace Mini_Project_Kredit.Services
 {
     public class CreditRegistrationService
     {
+        private readonly IWebHostEnvironment _environment;
         private readonly IDbContextFactory<AppDbContext> _dbFactory;
         private readonly IEmailSender _emailSender;
 
-        public CreditRegistrationService(IDbContextFactory<AppDbContext> dbFactory, IEmailSender emailSender)
+        // PERBAIKAN ERROR CS0103 DI SINI:
+        // IWebHostEnvironment harus diterima sebagai parameter constructor
+        public CreditRegistrationService(
+            IDbContextFactory<AppDbContext> dbFactory, 
+            IEmailSender emailSender,
+            IWebHostEnvironment environment) // <<< TAMBAHKAN parameter environment
         {
             _dbFactory = dbFactory;
             _emailSender = emailSender;
+            _environment = environment; // <<< INISIALISASI environment
         }
 
         public async Task<ServiceResult> RegisterAsync(CreditRegistration model)
@@ -147,13 +154,26 @@ namespace Mini_Project_Kredit.Services
         }
         public async Task<string> SaveProfileImageAsync(IBrowserFile file)
         {
-            // 1. Logika di sini adalah:
-            //    a. Menentukan path fisik di server (misal: wwwroot/profiles)
-            //    b. Menyimpan stream file ke path tersebut.
-            //    c. MENGEMBALIKAN PATH RELATIF URL (misal: /profiles/user_123.png)
+            // 1. Definisikan lokasi penyimpanan
+            var uploadsPath = Path.Combine(_environment.WebRootPath, "uploads");
 
-            // Contoh: return "/uploads/profiles/namafile.jpg";
-            throw new NotImplementedException("Implementasi penyimpanan file di server diperlukan.");
+            // Buat folder jika belum ada
+            if (!Directory.Exists(uploadsPath))
+            {
+                Directory.CreateDirectory(uploadsPath);
+            }
+
+            // 2. Buat nama file unik
+            var extension = Path.GetExtension(file.Name);
+            var fileName = $"{Guid.NewGuid()}{extension}";
+            var filePath = Path.Combine(uploadsPath, fileName);
+
+            // 3. Simpan file
+            await using FileStream fs = new(filePath, FileMode.Create);
+            await file.OpenReadStream().CopyToAsync(fs);
+
+            // 4. Kembalikan path URL (Relatif ke wwwroot)
+            return $"/uploads/{fileName}";
         }
 
     }

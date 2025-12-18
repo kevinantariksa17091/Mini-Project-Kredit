@@ -33,6 +33,8 @@ namespace Mini_Project_Kredit.Services
             using var client = new SmtpClient(_opt.Host, _opt.Port)
             {
                 EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(_opt.Username, _opt.Password)
             };
 

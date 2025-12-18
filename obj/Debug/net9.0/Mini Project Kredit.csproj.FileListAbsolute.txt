@@ -77,6 +77,14 @@ C:\Users\berij\Documents\Mini-Project-Kredit\obj\Debug\net9.0\refint\Mini_Projec
 C:\Users\berij\Documents\Mini-Project-Kredit\obj\Debug\net9.0\Mini_Project_Kredit.pdb
 C:\Users\berij\Documents\Mini-Project-Kredit\obj\Debug\net9.0\Mini Project Kredit.genruntimeconfig.cache
 C:\Users\berij\Documents\Mini-Project-Kredit\obj\Debug\net9.0\ref\Mini_Project_Kredit.dll
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.csproj.AssemblyReference.cache
+D:\Mini Project Kredit\obj\Debug\net9.0\rpswa.dswa.cache.json
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.GeneratedMSBuildEditorConfig.editorconfig
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.AssemblyInfoInputs.cache
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.AssemblyInfo.cs
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.csproj.CoreCompileInputs.cache
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini_Project_Kredit.MvcApplicationPartsAssemblyInfo.cache
+D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.sourcelink.json
 D:\Mini Project Kredit\bin\Debug\net9.0\appsettings.Development.json
 D:\Mini Project Kredit\bin\Debug\net9.0\appsettings.json
 D:\Mini Project Kredit\bin\Debug\net9.0\Mini_Project_Kredit.staticwebassets.runtime.json
@@ -206,14 +214,6 @@ D:\Mini Project Kredit\bin\Debug\net9.0\runtimes\win-x64\native\k5sprt64.dll
 D:\Mini Project Kredit\bin\Debug\net9.0\runtimes\win-x64\native\krb5_64.dll
 D:\Mini Project Kredit\bin\Debug\net9.0\runtimes\win-x64\native\krbcc64.dll
 D:\Mini Project Kredit\bin\Debug\net9.0\runtimes\win\lib\net8.0\System.Windows.Extensions.dll
-D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.csproj.AssemblyReference.cache
-D:\Mini Project Kredit\obj\Debug\net9.0\rpswa.dswa.cache.json
-D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.GeneratedMSBuildEditorConfig.editorconfig
-D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.AssemblyInfoInputs.cache
-D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.AssemblyInfo.cs
-D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.csproj.CoreCompileInputs.cache
-D:\Mini Project Kredit\obj\Debug\net9.0\Mini_Project_Kredit.MvcApplicationPartsAssemblyInfo.cache
-D:\Mini Project Kredit\obj\Debug\net9.0\Mini Project Kredit.sourcelink.json
 D:\Mini Project Kredit\obj\Debug\net9.0\rjimswa.dswa.cache.json
 D:\Mini Project Kredit\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 D:\Mini Project Kredit\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json

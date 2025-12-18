@@ -1,23 +1,21 @@
-# build stage
+# STAGE 1: BUILD
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-WORKDIR /app
+WORKDIR /src
 
-# copy csproj and restore
-COPY ["Mini_Project_Kredit/Mini_Project_Kredit.csproj", "Mini_Project_Kredit/"]
-RUN dotnet restore "Mini_Project_Kredit/Mini_Project_Kredit.csproj"
+# Copy file csproj dulu (cache restore)
+COPY ["Mini Project Kredit.csproj", "./"]
+RUN dotnet restore "./Mini Project Kredit.csproj" -v minimal
 
-# copy the rest and publish
+# Copy sisanya
 COPY . .
-WORKDIR "/src/Mini_Project_Kredit"
-RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
 
-# runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+# Publish
+RUN dotnet publish "./Mini Project Kredit.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+# STAGE 2: RUNTIME
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
-
-# run on http inside container
-ENV ASPNETCORE_URLS=http://+:8080
-EXPOSE 8080
-
 COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "Mini_Project_Kredit.dll"]
+
+# Ganti sesuai assembly kamu (biasanya sama dengan nama csproj tanpa .csproj, tapi cek di bin output)
+ENTRYPOINT ["dotnet", "Mini Project Kredit.dll"]
